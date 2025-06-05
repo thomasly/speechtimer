@@ -8,6 +8,7 @@ class SpeechTimer {
         this.dangerTime = 0;
         this.isFullscreen = false;
         this.soundEnabled = false;
+        this.wakeLock = null;
 
         // DOM 元素
         this.timerDisplay = document.getElementById('timerDisplay');
@@ -57,6 +58,30 @@ class SpeechTimer {
         this.updateDisplay();
     }
 
+    async requestWakeLock() {
+        try {
+            if ('wakeLock' in navigator) {
+                this.wakeLock = await navigator.wakeLock.request('screen');
+                console.log('屏幕常亮已启用');
+            }
+        } catch (err) {
+            console.log('无法启用屏幕常亮:', err);
+        }
+    }
+
+    releaseWakeLock() {
+        if (this.wakeLock) {
+            this.wakeLock.release()
+                .then(() => {
+                    this.wakeLock = null;
+                    console.log('屏幕常亮已禁用');
+                })
+                .catch(err => {
+                    console.log('无法禁用屏幕常亮:', err);
+                });
+        }
+    }
+
     toggleSound() {
         this.soundEnabled = this.soundEnabledInput.checked;
     }
@@ -89,11 +114,12 @@ class SpeechTimer {
         this.checkTimeStatus();
     }
 
-    start() {
+    async start() {
         if (!this.isRunning) {
             this.isRunning = true;
             this.startBtn.disabled = true;
             this.pauseBtn.disabled = false;
+            await this.requestWakeLock();
             this.timerId = setInterval(() => {
                 this.remainingSeconds--;
                 this.updateDisplay();
@@ -115,6 +141,7 @@ class SpeechTimer {
             this.startBtn.disabled = false;
             this.pauseBtn.disabled = true;
             clearInterval(this.timerId);
+            this.releaseWakeLock();
         }
     }
 
