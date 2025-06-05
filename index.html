@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演讲计时器</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="timer-container">
+        <h1>演讲计时器</h1>
+        
+        <div class="settings">
+            <div class="setting-group">
+                <label for="totalHours">总时长：</label>
+                <div class="time-inputs">
+                    <input type="number" id="totalHours" min="0" value="0" class="time-input">
+                    <span>:</span>
+                    <input type="number" id="totalMinutes" min="0" max="59" value="5" class="time-input">
+                    <span>:</span>
+                    <input type="number" id="totalSeconds" min="0" max="59" value="0" class="time-input">
+                </div>
+            </div>
+            <div class="setting-group">
+                <label for="warningTime">警告时间：</label>
+                <div class="time-inputs">
+                    <input type="number" id="warningHours" min="0" value="0" class="time-input">
+                    <span>:</span>
+                    <input type="number" id="warningMinutes" min="0" max="59" value="1" class="time-input">
+                    <span>:</span>
+                    <input type="number" id="warningSeconds" min="0" max="59" value="0" class="time-input">
+                </div>
+            </div>
+            <div class="setting-group">
+                <label for="dangerTime">危险时间：</label>
+                <div class="time-inputs">
+                    <input type="number" id="dangerHours" min="0" value="0" class="time-input">
+                    <span>:</span>
+                    <input type="number" id="dangerMinutes" min="0" max="59" value="0" class="time-input">
+                    <span>:</span>
+                    <input type="number" id="dangerSeconds" min="0" max="59" value="30" class="time-input">
+                </div>
+            </div>
+            <div class="setting-group sound-setting">
+                <label for="soundEnabled">声音提示：</label>
+                <label class="switch">
+                    <input type="checkbox" id="soundEnabled">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="timer-display" id="timerDisplay">
+            00:05:00
+        </div>
+
+        <div class="controls">
+            <button id="startBtn" class="btn">开始</button>
+            <button id="pauseBtn" class="btn" disabled>暂停</button>
+            <button id="resetBtn" class="btn">重置</button>
+            <button id="maximizeBtn" class="btn">最大化</button>
+        </div>
+    </div>
+
+    <div id="fullscreenTimer" class="fullscreen-timer hidden">
+        <div class="timer-display" id="fullscreenTimerDisplay">00:05:00</div>
+        <button id="exitFullscreenBtn" class="btn">退出全屏</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
